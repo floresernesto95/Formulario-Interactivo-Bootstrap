@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <!-- <div class="container">, creates a container element providing consistent padding, margins, and alignment -->
+        <form onsubmit="sendForm(event)" action="message.html" method="get" class="row g-3"> <!-- ### event -->
+            <!-- onsubmit="sendForm()", attaches a JavaScript function to the form's onsubmit event, this function is executed whenever the form is submitted -->
+            <!-- event, provides information about the form submission event and allows control over its flow -->
+            <!-- action="message.html", specifies the URL to which the form data is submitted -->
+            <!-- method="get", specifies the HTTP method used to submit the form's data -->
+            <!-- class="row g-3", applies a gap or spacing of size 3 between the rows within the form -->
+            <div class="col-md-6">
+                <label for="inputNombre" class="form-label">Nombre</label>
+                <!-- <label>, HTML tag that defines a text label -->
+                <!-- for="inputNombre", links the label to the input field by referencing its id. This improves accessibility, allowing screen readers to correctly associate the label with the input field -->
+                <!-- class="form-label", applies Bootstrap styling to the label -->
+                <input type="text" class="form-control" id="inputNombre" name="nombre">
+                <!-- type="text", specifies the type of input field -->
+                <!-- class="form-control", applies Bootstrap styling to the input -->
+                <!-- name="nombre", name of the input field, used when submitting the form -->
+            </div>
+            <div class="col-md-6">
+                <label for="inputApellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="inputApellido" name="apellido">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Nivel Educativo</label>
+                <div class="form-check">
+                    <!-- class="form-check", Bootstrap class that helps to style checkboxes or radio buttons -->
+                    <input class="form-check-input" type="radio" name="nivelEducativo" id="nivelPrimario"
+                        value="Primario">
+                    <!-- class="form-check-input", applies Bootstrap styling -->
+                    <!-- type="radio", specifies that this is a radio button -->
+                    <!-- value="primario", sets the value associated with this radio button, which is submitted or processed when the form is submitted -->
+                    <label class="form-check-label" for="nivelPrimario">Primario</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="nivelEducativo" id="nivelSecundario"
+                        value="Secundario">
+                    <label class="form-check-label" for="nivelSecundario">Secundario</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="nivelEducativo" id="nivelTerciario"
+                        value="Terciario">
+                    <label class="form-check-label" for="nivelTerciario">Terciario</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="nivelEducativo" id="nivelUniversitario"
+                        value="Universitario">
+                    <label class="form-check-label" for="nivelUniversitario">Universitario</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="inputPais" class="form-label">País</label>
+                <select id="inputPais" class="form-select" name="pais" onchange="loadProvinces()">
+                    <!-- <select>, HTML tag is an element that creates a dropdown menu -->
+                    <!-- onchange="loadProvinces()", specifies a JavaScript function to be executed when the value of the <select> element changes -->
+                    <option value="0" selected>Selecciona un país...</option>
+                    <!-- selected, ensures that this option is shown by default when the dropdown is loaded -->
+                    <option value="1">Argentina</option>
+                    <option value="2">Brasil</option>
+                    <option value="3">Canadá</option>
+                    <option value="4">Francia</option>
+                    <option value="5">Alemania</option>
+                    <option value="6">India</option>
+                    <option value="7">Japón</option>
+                    <option value="8">México</option>
+                    <option value="9">Reino Unido</option>
+                    <option value="10">Estados Unidos</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="inputProvincia" class="form-label">Provincia</label>
+                <select id="inputProvincia" class="form-select" name="provincia">
+                    <option value="0" selected>Selecciona una provincia...</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="textareaObservaciones" class="form-label">Observaciones</label>
+                <textarea class="form-control" id="textareaObservaciones" rows="4"></textarea>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        function sendForm(e) { // The e parameter represents an event object passed to sendForm(), providing methods to interact with the form submission event
+            // Validate fields
+            const nombre = document.getElementById("inputNombre")
+            const apellido = document.getElementById("inputApellido")
+
+            if (nombre.value == "" || nombre.value.length > 100) {
+                alert("El campo Nombre es requerido y debe contener un máximo de 100 letras.")
+                e.preventDefault() // This method prevents the default action associated with the event from occurring
+                return
+            }
+
+            if (apellido.value == "" || apellido.value.length < 2 || apellido.value.length > 100) {
+                alert("El campo Apellido debe contener entre 2 y 100 letras.");
+                e.preventDefault()
+                return
+            }
+
+            // Check if a radio button is selected
+            const nivelEducativoRadios = document.getElementsByName("nivelEducativo");
+            let radioSelected = false;
+            for (let i = 0; i < nivelEducativoRadios.length; i++) {
+                if (nivelEducativoRadios[i].checked) {
+                    radioSelected = true
+                    break
+                }
+            }
+
+            if (!radioSelected) {
+                alert("Debe seleccionar un Nivel Educativo.")
+                e.preventDefault()
+                return
+            }
+
+            // Validate fields
+            const pais = document.getElementById("inputPais")
+            const provincia = document.getElementById("inputProvincia")
+
+            if (pais.value == "0") {
+                alert("Debe seleccionar un País.")
+                e.preventDefault()
+                return
+            }
+
+            if (provincia.value == "0") {
+                alert("Debe seleccionar una Provincia.");
+                e.preventDefault();
+                return;
+            }
+        }
+
+        // This function updates the "Provincia" dropdown based on the selected "País"
+        function loadProvinces() {
+            const pais = document.getElementById("inputPais").value
+            const provinciaDropdown = document.getElementById("inputProvincia") // Declares a constant variable named provinciaDropdown and assigns to it the element found in the HTML document with the ID "inputProvincia"
+
+            // Clear existing options
+            provinciaDropdown.innerHTML = "<option value='0' >Selecciona una provincia...</option>" // .innerHTML, allows you to access or modify the HTML content within that element
+
+            let uniqueValue = 1
+            let provincias = []
+            // Variables declared with let can be reassigned a new value, unlike variables declared with const
+            // Variables declared with let have block scope, meaning they are only accessible within the block (enclosed by curly braces {}) in which they are declared. This contrasts with variables declared with var, which have function scope or global scope
+
+            // Populate options based on selected "País"
+            switch (parseInt(pais)) { // parseInt(pais), function used to parse a string and convert it into an integer
+                case 1: // Argentina
+                    provincias = ["Buenos Aires", "Córdoba", "Santa Fe", "Mendoza"]
+                    break
+                case 2: // Brasil
+                    provincias = ["São Paulo", "Rio de Janeiro", "Bahia"]
+                    break
+                case 3: // Canadá
+                    provincias = ["Ontario", "Quebec", "British Columbia"]
+                    break
+                case 4: // Francia
+                    provincias = ["Île-de-France", "Provence-Alpes-Côte d'Azur", "Auvergne-Rhône-Alpes"]
+                    break
+                case 5: // Alemania
+                    provincias = ["Baviera", "Renania del Norte-Westfalia", "Baden-Wurtemberg"]
+                    break
+                case 6: // India
+                    provincias = ["Maharashtra", "Karnataka", "Tamil Nadu"]
+                    break
+                case 7: // Japón
+                    provincias = ["Tokyo", "Osaka", "Kyoto"]
+                    break
+                case 8: // México
+                    provincias = ["Ciudad de México", "Jalisco", "Nuevo León"]
+                    break
+                case 9: // Reino Unido
+                    provincias = ["Londres", "Manchester", "Birmingham"]
+                    break
+                case 10: // Estados Unidos
+                    provincias = ["California", "Nueva York", "Florida"]
+                    break
+            }
+
+            // Add new options to the dropdown
+            provincias.forEach(provincia => {
+                const option = document.createElement("option")
+                option.value = uniqueValue++
+                option.textContent = provincia
+                provinciaDropdown.appendChild(option)
+            })
+        }
+    </script>
+</body>
+
+</html>

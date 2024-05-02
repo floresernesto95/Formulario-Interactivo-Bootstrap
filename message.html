@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+
+<body>
+    ¡Formulario enviado!
+
+    <script>
+        const params = new URLSearchParams(window.location.search)
+        // URLSearchParams, provides methods for working with URL query parameters
+        // window.location.search, returns the query string of the current URL
+        alert(
+            "\nNombre: " + params.get("nombre") + // params.get("nombre"), retrieves the value associated with the key "nombre", assuming it is present in the URL's query string
+            "\nApellido: " + params.get("apellido") +
+            "\nNivel Educativo: " + params.get("nivelEducativo") + 
+            "\nPaís: " + params.get("pais") + 
+            "\nProvincia: " + params.get("provincia")
+        )
+    </script>
+</body>
+
+</html>
