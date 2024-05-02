@@ -1,5 +1,7 @@
 # Formulario Interactivo con Bootstrap
 
+![Texto alternativo](https://github.com/floresernesto95/Images/blob/main/formulario.png?raw=true)
+
 Este proyecto es un **Formulario Interactivo** construido con **HTML5, CSS3 y JavaScript**, utilizando el marco de trabajo **Bootstrap 5.3** para una experiencia de usuario elegante y adaptable. Aquí está su funcionalidad y características clave:
 
 - **Diseño y Usabilidad:**
